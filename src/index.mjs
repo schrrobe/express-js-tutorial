@@ -20,6 +20,31 @@ const mockUsers = [
     id: 3,
     username: 'James Bond',
     displayName: 'JB 007'
+  },
+  {
+    id: 4,
+    username: 'anna.mueller',
+    displayName: 'Anna Müller'
+  },
+  {
+    id: 5,
+    username: 'leo.baumann',
+    displayName: 'Leo Baumann'
+  },
+  {
+    id: 6,
+    username: 'natalia.schulz',
+    displayName: 'Natalia Schulz'
+  },
+  {
+    id: 7,
+    username: 'florian.bosch',
+    displayName: 'Florian Bosch'
+  },
+  {
+    id: 8,
+    username: 'marco.ritter',
+    displayName: 'Marco Ritter'
   }
 ]
 
@@ -29,7 +54,15 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/users', (request, response) => {
-  response.status(201).send(mockUsers)
+    console.log(request.query);
+    const {query: {filter,value},
+    } = request;
+
+
+    if(filter && value) return  response.status(201).send(
+        mockUsers.filter((user) => user[filter].includes(value))
+    );
+    return response.status(201).send(mockUsers)
 })
 
 app.get('/api/users/:id', (request, response) => {
