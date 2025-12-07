@@ -54,15 +54,16 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/users', (request, response) => {
-    console.log(request.query);
-    const {query: {filter,value},
-    } = request;
+  console.log(request.query)
+  const {
+    query: { filter, value }
+  } = request
 
-
-    if(filter && value) return  response.status(201).send(
-        mockUsers.filter((user) => user[filter].includes(value))
-    );
-    return response.status(201).send(mockUsers)
+  if (filter && value)
+    return response
+      .status(201)
+      .send(mockUsers.filter((user) => user[filter].includes(value)))
+  return response.status(201).send(mockUsers)
 })
 
 app.get('/api/users/:id', (request, response) => {
