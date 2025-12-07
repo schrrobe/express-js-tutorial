@@ -5,6 +5,8 @@ dotenv.config()
 
 const app = express()
 
+app.use(express.json())
+
 const mockUsers = [
   {
     id: 1,
@@ -67,6 +69,19 @@ app.get('/api/users', (request, response) => {
   return response.status(201).send(mockUsers)
 })
 
+app.post('/api/users', (request, response) => {
+  console.log(request.body)
+  console.log(response)
+  const { body } = request
+
+  const newUser = {
+    id: mockUsers[mockUsers.length - 1].id + 1,
+    ...body
+  }
+  mockUsers.push(newUser)
+  return response.status(201).send(newUser)
+})
+
 app.get('/api/users/:id', (request, response) => {
   console.log(request.params)
   const parsedId = parseInt(request.params.id)
@@ -91,6 +106,7 @@ app.get('/api/products', (request, response) => {
 })
 
 const PORT = process.env.PORT ?? 3000
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`)
 })
