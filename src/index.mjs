@@ -59,10 +59,11 @@ app.get('/api/users', (request, response) => {
     query: { filter, value }
   } = request
 
-  if (filter && value)
+  if (filter && value) {
     return response
       .status(201)
       .send(mockUsers.filter((user) => user[filter].includes(value)))
+  }
   return response.status(201).send(mockUsers)
 })
 
